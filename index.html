@@ -95,8 +95,8 @@
         function nextQuestion() {
             const answer = document.getElementById("answer").value;
 
-            // در سوالات "مطمئنی" و "دروغ که نمیگی"، نیازی به ورودی معتبر نیست
-            if (currentQuestion !== 1 && currentQuestion !== 3 && answer.trim() === "") return;
+            // ورودی برای همه سوالات فعال است
+            if (answer.trim() === "" && currentQuestion !== 1) return;
 
             // ذخیره جواب‌ها
             if (currentQuestion === 0) {
@@ -112,7 +112,7 @@
             if (currentQuestion === 3) {
                 answers.sure = answer;
                 if (answer.toLowerCase() === "نه" || answer.toLowerCase() === "na") {
-document.getElementById("question").innerText = "حالا اشکال نداره که مطمئن نیستی.";
+                    document.getElementById("question").innerText = "حالا اشکال نداره که مطمئن نیستی.";
                     setTimeout(() => {
                         currentQuestion++; // ادامه به سوال بعدی بعد از چند ثانیه
                         document.getElementById("question").innerText = questions[currentQuestion];
@@ -130,15 +130,6 @@ document.getElementById("question").innerText = "حالا اشکال نداره 
             // نمایش سوال بعدی یا پایان سوالات
             if (currentQuestion < questions.length) {
                 document.getElementById("question").innerText = questions[currentQuestion];
-
-                // برای سوالات "مطمئنی" و "دروغ که نمیگی"، ورودی غیرفعال می‌شود
-                if (currentQuestion === 1 || currentQuestion === 3) {
-                    document.getElementById("answer").disabled = true;
-                    document.getElementById("answer").placeholder = "نیازی به ورودی نیست";
-                } else {
-                    document.getElementById("answer").disabled = false;
-                    document.getElementById("answer").placeholder = "جوابت رو اینجا بنویس";
-                }
             } else {
                 sendAnswers(); // ارسال جواب‌ها
             }
